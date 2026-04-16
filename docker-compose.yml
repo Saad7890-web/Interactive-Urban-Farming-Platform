@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16
+    container_name: urban_farming_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: urban_farming
+    ports:
+      - "5434:5432"
+    volumes:
+      - urban_farming_pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: urban_farming_api
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PORT: 5000
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: urban_farming
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: change_this_secret
+      JWT_EXPIRES_IN: 7d
+      CORS_ORIGIN: http://localhost:3000
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  urban_farming_pgdata:
