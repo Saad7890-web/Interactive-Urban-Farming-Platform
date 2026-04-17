@@ -9,6 +9,7 @@ import {
     rejectVendorController,
 } from "../controllers/admin.controller.js";
 import { protect } from "../middlewares/auth.middleware.js";
+import { adminRateLimit } from "../middlewares/rateLimit.middleware.js";
 import { requireRole } from "../middlewares/role.middleware.js";
 
 const router = Router();
@@ -18,11 +19,11 @@ router.use(requireRole("admin"));
 
 router.get("/vendors", getVendorsController);
 router.get("/vendors/:vendorId", getVendorByIdController);
-router.patch("/vendors/:vendorId/approve", approveVendorController);
-router.patch("/vendors/:vendorId/reject", rejectVendorController);
+router.patch("/vendors/:vendorId/approve", adminRateLimit, approveVendorController);
+router.patch("/vendors/:vendorId/reject", adminRateLimit, rejectVendorController);
 
 router.get("/certifications", getCertificationsController);
-router.patch("/certifications/:certId/approve", approveCertificationController);
-router.patch("/certifications/:certId/reject", rejectCertificationController);
+router.patch("/certifications/:certId/approve", adminRateLimit, approveCertificationController);
+router.patch("/certifications/:certId/reject", adminRateLimit, rejectCertificationController);
 
 export default router;
