@@ -1,6 +1,7 @@
 import { Router } from "express";
 import adminRoutes from "./admin.routes.js";
 import authRoutes from "./auth.routes.js";
+import docsRoutes from "./docs.routes.js";
 import forumRoutes from "./forum.routes.js";
 import marketplaceRoutes from "./marketplace.routes.js";
 import rentalRoutes from "./rental.routes.js";
@@ -25,5 +26,6 @@ router.use("/marketplace", marketplaceRoutes);
 router.use("/tracking", trackingRoutes);
 router.use("/forum", forumRoutes);
 router.use("/rentals", rentalRoutes);
+router.use("/docs", docsRoutes);
 
 export default router;

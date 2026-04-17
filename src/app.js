@@ -22,6 +22,17 @@ if (env.nodeEnv !== "production") {
   app.use(morgan("dev"));
 }
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Welcome to the Urban Farming Platform API",
+    data: {
+      docs: "/api/v1/docs",
+      health: "/api/v1/health",
+    },
+  });
+});
+
 app.use("/api/v1", routes);
 
 app.use(notFoundMiddleware);
